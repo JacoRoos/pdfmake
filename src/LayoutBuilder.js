@@ -192,7 +192,9 @@ class LayoutBuilder {
 			let node = nodeGetter(pageIndex + 1, l, this.writer.context().pages[pageIndex].pageSize);
 
 			if (node) {
-				let sizes = sizeFunction(this.writer.context().getCurrentPage().pageSize, this.pageMargins);
+				// https://github.com/bpampuch/pdfmake/issues/368#issuecomment-377803250
+				let sizes = sizeFunction(this.writer.context().getCurrentPage().pageSize, this.writer.context().getCurrentPage().pageMargins);
+				//let sizes = sizeFunction(this.writer.context().getCurrentPage().pageSize, this.pageMargins);
 				this.writer.beginUnbreakableBlock(sizes.width, sizes.height);
 				node = this.docPreprocessor.preprocessDocument(node);
 				this.processNode(this.docMeasure.measureDocument(node));
